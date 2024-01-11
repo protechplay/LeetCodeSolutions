@@ -1,0 +1,36 @@
+//Solution to https://leetcode.com/problems/leaf-similar-trees/description/?envType=daily-question&envId=2024-01-09
+public class Solution {
+    public bool LeafSimilar(TreeNode root1, TreeNode root2) {
+        // Direct declaration and initialization.
+        var traverse1 = _traverse(root1);
+        var traverse2 = _traverse(root2);
+
+        // Use SequenceEqual to compare leaf node sequences for equality.
+        return traverse1.SequenceEqual(traverse2);
+    }
+
+    private List<int> _traverse(TreeNode root) {
+        // If the current node is null, return an empty list.
+        if (root == null) {
+            return new List<int>();
+        }
+
+        var leafValues = new List<int>();
+    
+        // Check if the current node is a leaf node.
+        if (root.left == null && root.right == null) {
+            leafValues.Add(root.val);
+        } else {
+            // Recursively traverse the left subtree if it exists.
+            if (root.left != null) {
+                leafValues.AddRange(_traverse(root.left));
+            }
+            // Recursively traverse the right subtree if it exists.
+            if (root.right != null) {
+                leafValues.AddRange(_traverse(root.right));
+            }
+        }
+
+        return leafValues;
+    }
+}
